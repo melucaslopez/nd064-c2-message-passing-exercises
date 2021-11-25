@@ -1,0 +1,81 @@
+openapi: 3.0.0
+info:
+  description: API for ordering computers from IT.
+  version: "1.0.0"
+  title: Computer Orders API
+paths:
+  /orders/computers:
+    get:
+      summary: Retrieve all computer orders
+      operationId: getComputerOrders
+      description: It rertieves all computer orders historically made
+      responses:
+        '200':
+          description: Successfully retrieved all computer orders
+          content:
+            application/json:
+              schema:
+                type: array
+                $ref: '#/components/schemas/computerOrder'
+        '404':
+          description: Bad input parameter
+    post:
+      summary: Creates a new compueter order
+      operationId: createComputerOrder
+      description: Creates a computer order by setting an order in the QUEUED state.
+      responses:
+        '201':
+          description: Computer order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/computerOrder'
+        '400':
+          description: Invalid input, object invalid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/computerOrder'
+        description: Computer Order creation
+components:
+  schemas:
+    computerOrder:
+      type: object
+      required:
+        - id
+        - status
+        - created_at
+        - created_by
+        - equipment
+      properties:
+        id:
+          type: string
+          example: "1"
+        status:
+          $ref: '#/components/schemas/Status'
+        created_at:
+          type: string
+          format: date-time
+          example: "2020-10-16T10:31:10.001Z"
+        created_by:
+          type: string
+          example: "USER14"
+        equipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/Equipment'
+    Status:
+      type: string
+      enum:
+        - QUEUED
+        - PROCESSING
+        - COMPLETED
+        - FAILED
+    Equipment:
+      type: String
+      enum:
+        - KEYBOARD
+        - MOUSE
+        - WEBCAM
+        - MONITOR
