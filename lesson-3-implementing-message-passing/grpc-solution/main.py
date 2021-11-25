@@ -29,7 +29,7 @@ class OrderServicer(order_pb2_grpc.OrderServiceServicer):
         return result
 
     def Create(self, request, context):
-        print("Received a message!")
+        print("Message received!")
 
         request_value = {
             "id": request.id,

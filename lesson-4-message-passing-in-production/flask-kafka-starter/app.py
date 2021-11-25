@@ -30,10 +30,17 @@ def computers():
     elif request.method == 'POST':
         request_body = request.json
         result = create_order(request_body)
+        collectRequestData(request_body)
         return Response(status=202)
     else:
         raise Exception('Unsupported HTTP request type.')
 
+
+def collectRequestData(requestData):
+    kafka_data = json.dumps(requestData).encode()
+    kafka_producer = g.kafka_producer
+    kafka_producer.send('items', kafka_data)
+    kafka_producer.flush()
 
 if __name__ == '__main__':
     app.run()

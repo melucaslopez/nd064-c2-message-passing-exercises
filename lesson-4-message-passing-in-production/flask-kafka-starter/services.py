@@ -1,4 +1,5 @@
 import json
+
 from .app import g
 from .enums import Status
 

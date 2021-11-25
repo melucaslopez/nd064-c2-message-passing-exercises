@@ -23,11 +23,5 @@ def createOrder():
 def getOrder():
     return jsonify(retrieve_orders())
 
-class Status(Enum):
-    Queued = 'Queued'
-    Processing = 'Processing'
-    Completed = 'Completed'
-    Failed = 'Failed'
-
 if __name__ == '__main__':
     app.run()
