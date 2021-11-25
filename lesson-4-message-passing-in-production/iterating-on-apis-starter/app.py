@@ -13,9 +13,18 @@ def health():
 
 @app.route('/api/orders/computers', methods=['GET', 'POST'])
 def computers():
-    if request.method == 'GET':
+    return computerOrders(request.method)
+
+
+@app.route('/api/v2/orders/computers', methods=['GET', 'POST'])
+def computersV2():
+    return computerOrders(request.method)
+
+
+def computerOrders(method):
+    if method == 'GET':
         return jsonify(retrieve_orders())
-    elif request.method == 'POST':
+    elif method == 'POST':
         request_body = request.json
         return jsonify(create_order(request_body))
     else:
